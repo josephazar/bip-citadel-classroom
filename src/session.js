@@ -1,6 +1,6 @@
 const crypto=require('node:crypto');
 const sessions=new Map();
-const cookieName='citadel_classroom_vuln';
+const cookieName='citadel_classroom_vuln_'+(process.env.PORT||'3250');
 function login(req,res){
  if(sessions.size>=2000)sessions.delete(sessions.keys().next().value);
  const token='CLASSROOM{TOKENS_ARE_NOT_SETTINGS}.'+crypto.randomBytes(24).toString('hex');
