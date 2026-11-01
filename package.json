@@ -1,0 +1,18 @@
+{
+  "name": "bip-citadel-classroom",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "^4.22.1",
+    "helmet": "^8.1.0",
+    "sql.js": "^1.13.0"
+  }
+}

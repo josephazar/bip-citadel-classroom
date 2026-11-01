@@ -1,0 +1,21 @@
+// Classroom-only fixture: no real users, database credentials, files or outside services.
+const express=require('express'),helmet=require('helmet'),path=require('node:path');
+const session=require('./session');
+const app=express();app.disable('x-powered-by');app.set('trust proxy',1);
+app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],scriptSrc:["'self'","'wasm-unsafe-eval'"],styleSrc:["'self'","'unsafe-inline'"],imgSrc:["'self'",'data:','blob:'],fontSrc:["'self'",'data:'],connectSrc:["'self'"],frameAncestors:["'self'",'https://room.961host.online'],upgradeInsecureRequests:process.env.NODE_ENV==='production'?[]:null}},crossOriginOpenerPolicy:false}));
+app.use(express.json({limit:'4kb'}));
+app.use((_req,res,next)=>{res.set('Cache-Control','no-store');next();});
+app.get('/healthz',(_req,res)=>res.json({ok:true,app:'citadel-classroom'}));
+app.post('/demo/login',session.login);
+app.use('/lab-api',session.authenticate);
+app.get('/lab-api/logs',require('./logs'));
+app.get('/lab-api/notes/:id',require('./notes'));
+app.get('/lab-api/admin',require('./admin'));
+app.get('/lab-api/search',(req,res,next)=>require('./search')(req,res).catch(next));
+const flags=new Set(['CLASSROOM{TOKENS_ARE_NOT_SETTINGS}','CLASSROOM{LOGS_ARE_DATA_STORES}','CLASSROOM{AN_ID_IS_NOT_AUTHORITY}','CLASSROOM{A_HEADER_IS_NOT_A_ROLE}','CLASSROOM{DATA_BECAME_SQL}']);
+app.post('/demo/capture',session.authenticate,(req,res)=>res.json({captured:flags.has(req.body.flag)}));
+app.use(express.static(path.join(__dirname,'../public'),{index:'index.html'}));
+app.use((_req,res)=>res.status(404).json({error:'Not found.'}));
+app.use((e,_req,res,_next)=>{console.error(e.message);res.status(500).json({error:'Demo server error.'});});
+if(require.main===module)app.listen(Number(process.env.PORT||3250),'0.0.0.0',()=>console.log('Classroom lab ready.'));
+module.exports={app};
