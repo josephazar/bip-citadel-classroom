@@ -17,6 +17,10 @@ Five source files are intentionally weak: `src/session.js`, `src/logs.js`, `src/
 
 `npm test` verifies that the intended weaknesses remain reproducible. Do not reuse these handlers for a real application. The app is a deliberately vulnerable educational fixture, not an authentication starter.
 
+## Teacher reset (hosted copy)
+
+When several people use the same hosted copy, the instructor can sign everyone out: set the environment variable `TEACHER_PASSWORD` on the server, then open `/teacher.html`, type that password and use **Show active sessions** or **Reset the class**. Without the variable the controls stay disabled (HTTP 503). Wrong passwords are throttled. Demo sessions live in memory only, so a restart also clears them.
+
 ## Rebuild Flutter
 
 ```sh

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Instructor | Citadel Classroom</title>
+<style>
+body{margin:0;background:#f2f2f2;color:#2c2c2c;font:17px/1.5 Corbel,"Segoe UI",system-ui,sans-serif}
+main{max-width:520px;margin:48px auto;padding:0 20px}
+h1{color:#099bdd;font-weight:400;margin:0 0 6px}
+label{display:block;margin:18px 0 6px;font-weight:600}
+input{width:100%;box-sizing:border-box;padding:10px;border:1px solid #b9c2c9;border-radius:8px;font:inherit}
+button{margin:12px 8px 0 0;padding:10px 16px;border:0;border-radius:999px;background:#099bdd;color:#fff;font:inherit;cursor:pointer}
+button.danger{background:#f56617}
+#out{margin-top:18px;min-height:2.6em;padding:10px 12px;background:#fff;border-left:5px solid #099bdd;border-radius:6px}
+#out.err{border-color:#f56617}
+a{color:#099bdd}
+</style></head><body><main>
+<h1>Instructor controls</h1>
+<p>Reset the class: every demo session is cleared, so each student starts again from <b>Load demo as Alice</b>. Only for the instructor.</p>
+<label for="pw">Teacher password</label>
+<input id="pw" type="password" autocomplete="current-password">
+<button id="check" type="button">Show active sessions</button><button id="reset" class="danger" type="button">Reset the class</button>
+<p id="out" role="status"></p>
+<p><a href="/">Back to the lab</a></p>
+</main><script src="/teacher.js"></script></body></html>

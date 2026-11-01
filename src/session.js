@@ -16,4 +16,5 @@ function authenticate(req,res,next){
  if(!user||user.expires<Date.now())return res.status(401).json({error:'Select Load demo first.'});
  req.user=user;req.sessionToken=token;next();
 }
-module.exports={login,authenticate};
+function clear(){const n=sessions.size;sessions.clear();return n;}
+module.exports={login,authenticate,clear,count:()=>sessions.size};
