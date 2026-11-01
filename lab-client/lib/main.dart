@@ -128,6 +128,8 @@ class _ClassroomState extends State<ClassroomApp> {
               const Text(
                 'Watch the instructor: observe the request, inspect the code, then compare the repaired behavior. Five classroom flags; no grade or real student data.',
               ),
+              const SizedBox(height: 14),
+              const _HowTo(),
               const SizedBox(height: 18),
               Wrap(
                 spacing: 12,
@@ -241,4 +243,72 @@ class _ClassroomState extends State<ClassroomApp> {
       ),
     ),
   );
+}
+
+/// A short, always-visible guide for people who open the page without the instructor's walkthrough.
+class _HowTo extends StatelessWidget {
+  const _HowTo();
+  @override
+  Widget build(BuildContext context) {
+    const bold = TextStyle(fontWeight: FontWeight.w700);
+    Widget line(String n, List<InlineSpan> parts) => Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(width: 22, child: Text('$n.', style: bold)),
+          Expanded(child: Text.rich(TextSpan(children: parts))),
+        ],
+      ),
+    );
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
+      decoration: const BoxDecoration(
+        color: Color(0xffeaf6fc),
+        border: Border(left: BorderSide(color: Color(0xff099bdd), width: 5)),
+      ),
+      child: DefaultTextStyle.merge(
+        style: const TextStyle(fontSize: 14, height: 1.35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('How to use this page', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+            line('1', const [
+              TextSpan(text: 'Click '),
+              TextSpan(text: 'Load demo as Alice', style: bold),
+              TextSpan(text: ' first. Nothing else works before that.'),
+            ]),
+            line('2', const [
+              TextSpan(text: 'Try the tools below one at a time and read the dark box: '),
+              TextSpan(text: 'Debug logs', style: bold),
+              TextSpan(text: ', '),
+              TextSpan(text: 'Note ID', style: bold),
+              TextSpan(text: ', '),
+              TextSpan(text: 'Search note titles', style: bold),
+              TextSpan(text: ', '),
+              TextSpan(text: 'Request console', style: bold),
+              TextSpan(text: ', and your browser DevTools (Application, Local storage).'),
+            ]),
+            line('3', const [
+              TextSpan(text: 'Each weakness hides a flag shaped like '),
+              TextSpan(text: 'CLASSROOM{...}', style: bold),
+              TextSpan(text: '. Paste it in the box at the bottom and click '),
+              TextSpan(text: 'Capture classroom flag', style: bold),
+              TextSpan(text: '. Five flags in all.'),
+            ]),
+            line('4', const [
+              TextSpan(text: 'If a click answers '),
+              TextSpan(text: 'Select Load demo first', style: bold),
+              TextSpan(text: ', your session ended or the instructor reset the class: click '),
+              TextSpan(text: 'Load demo as Alice', style: bold),
+              TextSpan(text: ' again.'),
+            ]),
+            const SizedBox(height: 8),
+            const Text('Hints, no answers', style: bold),
+            const Text('Debug logs: read every line.  Note ID: you own note 101; what about the next number?  Search: what does an apostrophe do?  Request console: who decides the role?  DevTools: what is stored for this site?'),
+          ],
+        ),
+      ),
+    );
+  }
 }
