@@ -388,11 +388,18 @@ class _NotesState extends State<NotesApp> {
       else ...[
         _title('Hi, Alice', sub: 'Your notes'),
         Wrap(
+          spacing: 8,
           children: [
             Chip(
               avatar: const Icon(Icons.cloud_done_outlined, size: 18),
               label: Text(mode),
               visualDensity: VisualDensity.compact,
+            ),
+            ActionChip(
+              avatar: const Icon(Icons.refresh, size: 18),
+              label: const Text('Load demo as Alice'),
+              visualDensity: VisualDensity.compact,
+              onPressed: login,
             ),
           ],
         ),
@@ -565,7 +572,7 @@ class _NotesState extends State<NotesApp> {
                         padding: const EdgeInsets.symmetric(vertical: 2),
                         child: SelectableText(
                           l is String ? l : jsonEncode(l),
-                          style: const TextStyle(fontFamily: _mono, fontSize: 12.5),
+                          style: const TextStyle(fontFamily: _mono, fontSize: 11),
                         ),
                       ),
                     )
@@ -669,7 +676,7 @@ class _NotesState extends State<NotesApp> {
           child: ListTile(
             dense: true,
             leading: const Icon(Icons.flag, color: Color(0xff1a9c4a)),
-            title: SelectableText(f, style: const TextStyle(fontFamily: _mono, fontSize: 12.5)),
+            title: SelectableText(f, style: const TextStyle(fontFamily: _mono, fontSize: 11)),
           ),
         ),
       ),
