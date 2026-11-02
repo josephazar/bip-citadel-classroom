@@ -5,3 +5,9 @@ build/
 .env*
 .DS_Store
 .kotlin/
+.local/
+*.jks
+*.keystore
+key.properties
+**/.idea/
+*.iml

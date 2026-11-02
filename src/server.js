@@ -15,10 +15,21 @@ app.get('/lab-api/logs',require('./logs'));
 app.get('/lab-api/notes/:id',require('./notes'));
 app.get('/lab-api/admin',require('./admin'));
 app.get('/lab-api/search',(req,res,next)=>require('./search')(req,res).catch(next));
+app.use('/lab-api',require('./mobile').router);
 const flags=new Set(['CLASSROOM{TOKENS_ARE_NOT_SETTINGS}','CLASSROOM{LOGS_ARE_DATA_STORES}','CLASSROOM{AN_ID_IS_NOT_AUTHORITY}','CLASSROOM{A_HEADER_IS_NOT_A_ROLE}','CLASSROOM{DATA_BECAME_SQL}']);
+Object.values(require('./mobile').flags).forEach(flag=>flags.add(flag));
+flags.add('CLASSROOM{EXPORTED_IS_A_DOOR}');
+flags.add('CLASSROOM{NONCES_MUST_BE_UNIQUE}');
 app.post('/demo/capture',session.authenticate,(req,res)=>res.json({captured:flags.has(req.body.flag)}));
+app.post('/demo/logout',session.authenticate,session.logout);
 app.use(express.static(path.join(__dirname,'../public'),{index:'index.html'}));
 app.use((_req,res)=>res.status(404).json({error:'Not found.'}));
 app.use((e,_req,res,_next)=>{console.error(e.message);res.status(500).json({error:'Demo server error.'});});
-if(require.main===module)app.listen(Number(process.env.PORT||3250),'0.0.0.0',()=>console.log('Classroom lab ready.'));
+if(require.main===module){
+ const port=Number(process.env.PORT||3250),host=process.env.HOST||'0.0.0.0';
+ if(process.env.TLS_CERT&&process.env.TLS_KEY){
+  const fs=require('node:fs');
+  require('node:https').createServer({cert:fs.readFileSync(process.env.TLS_CERT),key:fs.readFileSync(process.env.TLS_KEY)},app).listen(port,host,()=>console.log('Classroom HTTPS lab ready.'));
+ }else app.listen(port,host,()=>console.log('Classroom lab ready.'));
+}
 module.exports={app};

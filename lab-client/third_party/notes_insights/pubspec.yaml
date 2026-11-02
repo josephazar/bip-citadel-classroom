@@ -1,0 +1,5 @@
+name: notes_insights
+description: Local fictional dependency for the BIP supply-chain exercise. Never contacts outside services.
+version: 1.0.0
+environment:
+  sdk: '>=3.9.0 <4.0.0'
