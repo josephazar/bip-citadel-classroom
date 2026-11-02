@@ -360,6 +360,15 @@ class _NotesHomeState extends State<NotesHome> {
           ],
         ),
       ),
+      if (signedIn)
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            onPressed: busy ? null : login,
+            icon: const Icon(Icons.refresh),
+            label: const Text('Renew demo session'),
+          ),
+        ),
       const SizedBox(height: 24),
       const Text(
         'Your notebooks',

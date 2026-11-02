@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:cryptography/cryptography.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -131,6 +132,35 @@ void main() {
     await tester.tap(find.text('Flags'));
     await tester.pumpAndSettle();
     expect(find.text('0 / 11'), findsOneWidget);
+
+    // A long lecture may outlast the session. Renewal must keep captured flags.
+    await tester.enterText(
+      find.byType(TextField).first,
+      'CLASSROOM{TOKENS_ARE_NOT_SETTINGS}',
+    );
+    FocusManager.instance.primaryFocus?.unfocus();
+    await tester.tap(find.text('Capture flag'));
+    for (var n = 0; n < 100 && find.text('1 / 11').evaluate().isEmpty; n++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(find.text('1 / 11'), findsOneWidget);
+    final previous = await store.read();
+    final expired = await LabApi.create();
+    expired.token = previous;
+    await expired.request('/demo/logout', body: {});
+    expired.close();
+    await tester.tap(find.text('My notes'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Renew demo session'));
+    await tester.tap(find.text('Renew demo session'));
+    for (var n = 0; n < 100 && await store.read() == previous; n++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(await store.read(), isNot(previous));
+    await tester.tap(find.text('Flags'));
+    await tester.pumpAndSettle();
+    expect(find.text('1 / 11'), findsOneWidget);
+
     expect(tester.takeException(), isNull);
   });
 }

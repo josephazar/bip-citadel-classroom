@@ -72,6 +72,8 @@ cd ..
 python3 scripts/android-demo.py test
 ```
 
+For a lecture longer than 30 minutes, tap **My notes > Renew demo session**. This also recovers an expired session without clearing captured flags. **Sign out** clears the flag set.
+
 The last command runs real Android integration checks: API requests, persisted session, crypto behavior and screen interactions. `python3 scripts/android-demo.py build` builds a debug APK without opening the app. The artifact is `lab-client/build/app/outputs/flutter-apk/app-debug.apk`.
 
 ## Browser companion
