@@ -10,7 +10,7 @@ dependencies:
   http: ^1.5.0
   web: ^1.1.1
   path_provider: 2.1.5
-  cryptography: 2.7.0
+  cryptography: 2.9.0
   notes_insights:
     path: third_party/notes_insights
 dev_dependencies:
