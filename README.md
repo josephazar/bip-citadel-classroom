@@ -27,7 +27,7 @@ When several people use the same hosted copy, the instructor can sign everyone o
 cd lab-client
 flutter pub get
 flutter analyze
-flutter build web --release --no-web-resources-cdn
+flutter build web --release --no-web-resources-cdn --pwa-strategy=none
 cd ..
 cp -R lab-client/build/web/. public/
 ```
