@@ -8,7 +8,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.5.0
-  web: ^1.1.1
+  web: ^1.1.2
   path_provider: 2.1.5
   cryptography: 2.7.0
   notes_insights:
