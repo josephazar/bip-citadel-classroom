@@ -11,3 +11,4 @@ build/
 key.properties
 **/.idea/
 *.iml
+__pycache__/

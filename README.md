@@ -85,10 +85,7 @@ PORT=3250 npm start
 Open `http://localhost:3250`. Rebuild the bundled web client after Dart changes:
 
 ```sh
-cd lab-client
-flutter build web --release --no-web-resources-cdn --pwa-strategy=none
-cd ..
-cp -R lab-client/build/web/. public/
+python3 scripts/build-web.py
 ```
 
 The web client uses relative API URLs and must share the API's origin. Native `flutter run` does not use the bundled web build. Teacher reset controls remain disabled unless `TEACHER_PASSWORD` is configured in the server environment; no real credentials belong in this repo.
