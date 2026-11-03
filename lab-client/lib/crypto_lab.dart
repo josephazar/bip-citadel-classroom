@@ -4,6 +4,7 @@ import 'package:cryptography/cryptography.dart';
 class NoteCrypto {
   final algorithm = AesGcm.with256bits();
   // C11 / M10: the key is extractable and every encryption repeats the nonce.
+  // C11: A bundled key is extractable; reusing a GCM nonce breaks security.
   Future<SecretKey> key() async =>
       SecretKey(utf8.encode('0123456789abcdef0123456789abcdef'));
   Future<String> encrypt(String text) async {

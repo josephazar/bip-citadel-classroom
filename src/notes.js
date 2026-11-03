@@ -3,5 +3,6 @@ module.exports=(req,res)=>{
  // C3: the identifier is checked, but the authenticated owner is not.
  const note=notes[req.params.id];
  if(!note)return res.status(404).json({error:'Note not found.'});
+ // C3: No owner check: Alice can request Bob's note by changing the ID.
  res.json(note);
 };

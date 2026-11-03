@@ -10,6 +10,7 @@ const flags = {
 
 router.get('/partner', (req, res) => {
   // C6 / M1: a privileged shared key is shipped inside the APK assets.
+  // C6: Anyone can extract this fictional shared key from the APK.
   if (req.get('X-Partner-Key') !== 'fictional-partner-key-2026') {
     return res.status(403).json({error: 'Partner key required.'});
   }
@@ -30,6 +31,7 @@ router.get('/transport', (req, res) => {
 
 router.get('/vault', (req, res) => {
   // C9 / M7: a patchable client decision is treated as authorization.
+  // C9: A client-controlled header does not prove premium membership.
   if (req.get('X-App-Verified') !== 'true') return res.status(403).json({error: 'Premium membership required.'});
   res.json({archive: 'Fictional premium notebook', flag: flags.binary});
 });

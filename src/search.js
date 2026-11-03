@@ -9,6 +9,8 @@ module.exports=async(req,res)=>{
   db.run('CREATE TABLE notes(owner TEXT,title TEXT,body TEXT)');
   db.run("INSERT INTO notes VALUES ('alice','Shopping','My groceries'),('bob','Archive','CLASSROOM{DATA_BECAME_SQL}')");
   // C5: client text becomes part of the SQL statement.
+  // C5: Input becomes SQL syntax; an OR payload bypasses the owner filter.
+  // Bound parameters would keep the search text as data.
   const query=`SELECT * FROM notes WHERE owner = '${req.user.id}' AND title LIKE '%${q}%'`;
   const stmt=db.prepare(query),rows=[];
   while(stmt.step()&&rows.length<10)rows.push(stmt.getAsObject());stmt.free();

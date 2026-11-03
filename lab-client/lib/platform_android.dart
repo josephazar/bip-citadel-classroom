@@ -10,6 +10,7 @@ const nativeApp = true;
 
 Future<http.Client> buildClient(Uri endpoint) async {
   // C8 / M5: accepting every certificate defeats TLS authentication.
+  // C8: Accepting invalid certificates also trusts an impostor server.
   return IOClient(
     HttpClient()..badCertificateCallback = (cert, host, port) => true,
   );
@@ -19,6 +20,7 @@ class SessionStore {
   Future<File> get _file async =>
       File('${(await getApplicationDocumentsDirectory()).path}/session.json');
   // C1 / M9: token and personal data persisted without encryption.
+  // C1: Plaintext JSON exposes a reusable token to anyone who reads the file.
   Future<void> write(String token) async => (await _file).writeAsString(
     jsonEncode({'token': token, 'email': 'fictional.alice@example.test'}),
   );

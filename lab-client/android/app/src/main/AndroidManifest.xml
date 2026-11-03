@@ -10,6 +10,7 @@
             <intent-filter><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" /></intent-filter>
         </activity>
         <!-- C10 / M8: an internal screen exposed to every other application. -->
+        <!-- C10: exported=true allows other apps to launch this internal screen. -->
         <activity android:name=".DiagnosticsActivity" android:exported="true" />
         <meta-data android:name="flutterEmbedding" android:value="2" />
     </application>
